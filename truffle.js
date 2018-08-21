@@ -53,5 +53,14 @@ module.exports = {
       },
       network_id: 3,
     },
+    kovan: {
+      provider: () => {
+        if (process.env.MNEMONIC) {
+          return new HDWalletProvider(process.env.MNEMONIC, 'https://kovan.infura.io');
+        }
+        return TestRPC.provider();
+      },
+      network_id: 42,
+    },
   },
 };

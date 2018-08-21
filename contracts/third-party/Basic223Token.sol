@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.23;
 
 import "./ERC223Basic.sol";
 import "./ERC223Receiver.sol";
@@ -28,9 +28,9 @@ contract Basic223Token is ERC223Basic, BasicToken {
     * @return bool successful or not
     */
     function transfer(address _to, uint _value, bytes _data) public returns (bool success) {
-        require(_to != address(0));
-        require(_value <= balances[msg.sender]);
-        require(balances[_to].add(_value) > balances[_to]);  // Detect balance overflow
+        require(_to != address(0), "Invalid address.");
+        require(_value <= balances[msg.sender], "Sending amount exceeded balance of sender.");
+        require(balances[_to].add(_value) > balances[_to], "Balance overflow was happened.");  // Detect balance overflow
     
         assert(super.transfer(_to, _value));               //@dev Save transfer
 
@@ -57,10 +57,14 @@ contract Basic223Token is ERC223Basic, BasicToken {
     }
 
     //assemble the given address bytecode. If bytecode exists then the _addr is a contract.
-    function isContract(address _addr) internal returns (bool is_contract) {
-        // retrieve the size of the code on target address, this needs assembly
-        uint length;
-        assembly { length := extcodesize(_addr) }
-        return length > 0;
+    function isContract(address _addr) private view returns (bool is_contract) {
+        uint256 length;
+        /* solium-disable-next-line */
+        assembly {
+        //retrieve the size of the code on target address, this needs assembly
+            length := extcodesize(_addr)
+        }
+        return (length > 0);
     }
+
 }

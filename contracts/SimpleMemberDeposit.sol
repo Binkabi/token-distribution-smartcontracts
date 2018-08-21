@@ -47,7 +47,7 @@ contract SimpleMemberDeposit is ERC223Receiver, Ownable, HasNoEther, HasNoContra
     }
 
     modifier onlyTokenContract() {
-//        require(isContract(msg.sender) == true);
+        require(isContract(msg.sender) == true);
         _;
     }
 
@@ -74,9 +74,11 @@ contract SimpleMemberDeposit is ERC223Receiver, Ownable, HasNoEther, HasNoContra
     }
 
     function isContract(address _contractAddress) internal returns (bool) {
-        // retrieve the size of the code on target address, this needs assembly
-        uint length;
-        assembly { length := extcodesize(_contractAddress) }
+        uint256 length;
+        /* solium-disable-next-line */
+        assembly {
+            length := extcodesize(_contractAddress)
+        }
         return length > 0;
     }
 

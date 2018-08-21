@@ -12,11 +12,7 @@ module.exports = (deployer) => {
       return sm.setApiAddress(apiAddress);
     });
   });
-  deployer.deploy(BinkabiNotary, BinkabiToken.address).then(function () {
-    return BinkabiNotary.deployed().then(function (bn) {
-      return bn.setApiAddress(apiAddress);
-    });
-  });
+  deployer.deploy(BinkabiNotary);
   deployer.deploy(OrderPerformanceBond, BinkabiToken.address).then(function () {
     return OrderPerformanceBond.deployed().then(function (opb) {
       return opb.setApiAddress(apiAddress);

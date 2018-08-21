@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.23;
 
 import "openzeppelin-solidity/contracts/token/ERC20/BasicToken.sol";
 
@@ -17,7 +17,11 @@ import "openzeppelin-solidity/contracts/token/ERC20/BasicToken.sol";
 */
 contract ERC223Basic is ERC20Basic {
     function transfer(address _to, uint256 _value, bytes _data) public returns (bool success);
-    function contractFallback(address _origin, address _to, uint _value, bytes _data) internal returns (bool success);
-    function isContract(address _addr) internal returns (bool is_contract);
+    function contractFallback(
+        address _origin, 
+        address _to, 
+        uint _value, 
+        bytes _data) internal returns (bool success);
+    function isContract(address _addr) private view returns (bool is_contract);
     event Transfer(address indexed _from, address indexed _to, uint256 _value, bytes indexed _data);
 }

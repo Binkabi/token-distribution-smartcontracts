@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.23;
 
 /*
  * Base class contracts willing to accept ERC223 token transfers must conform to.
